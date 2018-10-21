@@ -1,0 +1,125 @@
+﻿@model QuanLyTour.Models.PhieuDangKy
+
+@{
+    ViewBag.Title = "DuyetPhieuDangKy";
+}
+
+<h2>Duyệt phiếu đăng ký</h2>
+
+@if (Model != null)
+{
+    <div>
+        <h4>PhieuDangKy</h4>
+        <hr />
+        <form method="post" enctype="multipart/form-data">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.MaKhach)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.MaKhach)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Ngaylap)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Ngaylap)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.LichTrinh_Tour.NgayDi)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.LichTrinh_Tour.NgayDi)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.LichTrinh_Tour.NgayKetthuc)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.LichTrinh_Tour.NgayKetthuc)
+                </dd>
+
+                <dt>
+                    Khách tham gia
+                </dt>
+
+                <dd>
+                    @if (ViewBag.KhachThamGias != null)
+                    {
+                        List<QuanLyTour.Models.KhachThamGia> khachThamGias = ViewBag.KhachThamGias;
+                        <div style="width: 90%; float: left;">
+                            <div style="width:50%">
+                                Tên
+                            </div>
+                            <div style="width: 50%">
+                                Số điện thoại
+                            </div>
+                        </div>
+                        <div style="width: 90%; overflow: auto; float: left; height: 250px;">
+                            <table width="100%">
+                                <tr>
+                                    <td width="50%"></td>
+                                    <td width="50%"></td>
+                                </tr>
+                                @foreach (var khach in khachThamGias)
+                                {
+                                    <tr>
+                                        <td>@khach.Ten</td>
+                                        <td>@khach.SDT</td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+
+                    }
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.TinhTrang)
+                </dt>
+
+
+                <dd>
+                    <div>
+                        <span>
+                            @Html.RadioButtonFor(model => model.TinhTrang, true)
+                            Hợp lệ
+                        </span>
+                    </div>
+                    <div>
+                        <span>
+                            @Html.RadioButtonFor(model => model.TinhTrang, false)
+                            Không hợp lệ
+                        </span>
+                    </div>
+                </dd>
+                <dt>
+                </dt>
+                <dd>
+                    <input type="submit" class="btn btn-success" value="Xác nhận" />
+                </dd>
+
+            </dl>
+        </form>
+    </div>
+    <p>
+        @Html.ActionLink("Duyệt phiếu", "DuyetPhieuDangKy", new { phieu = Model.MaPhieuDK }) |
+        @Html.ActionLink("Quay về danh sách", "DanhSachPhieuChuaDuyet")
+    </p>
+
+}
+else
+{
+    <div>
+        <p>Không có dữ liệu</p>
+        <p>
+            @Html.ActionLink("Quay về danh sách", "DanhSachPhieuChuaDuyet")
+        </p>
+    </div>
+}

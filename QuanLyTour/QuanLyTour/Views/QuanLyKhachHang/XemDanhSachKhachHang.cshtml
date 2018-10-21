@@ -1,0 +1,65 @@
+﻿@model IEnumerable<QuanLyTour.Models.Khach>
+
+@{
+    ViewBag.Title = "XemDanhSachKhachHang";
+}
+
+<h2>XemDanhSachKhachHang</h2>
+@if (Model != null)
+{
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HoTen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Diachi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TenCoQuan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SDT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HoTen)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Diachi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenCoQuan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SDT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.MaKhach })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+}
+else
+{
+    <div>
+        <p style="font-size: xx-large">
+            Không có dữ liệu
+        </p>
+    </div>
+}

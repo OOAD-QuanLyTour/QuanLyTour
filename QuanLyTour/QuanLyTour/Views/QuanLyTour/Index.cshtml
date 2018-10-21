@@ -1,0 +1,62 @@
+﻿@model IEnumerable<QuanLyTour.Models.Tour>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<div>
+    <form method="post" enctype="multipart/form-data">
+        <input name="Text" type="text" value="@ViewData["text"]" />
+        <select name="LoaiTimKiem">
+            <option value="TenTour">Tên tour</option>
+            <option value="DiaDiem">Địa điểm</option>
+        </select>
+        <input type="submit" class="btn btn-success" value="Tìm kiếm" />
+    </form>
+</div>
+@if (Model != null)
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TenTour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GiaTour)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MoTa)
+            </th>
+        </tr>
+
+
+        @foreach (var item in Model)
+        {
+        
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TenTour)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GiaTour)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MoTa)
+                </td>
+                <td>
+                    <a href="@Url.Action("Details", new { tour = item.MaTour })">
+                        Detail
+                    </a>
+                </td>
+            </tr>
+        }
+        
+
+    </table>
+}
+else
+{
+    <div style="font-size: xx-large">
+        Không có tour nào trong CSDL
+    </div>
+}

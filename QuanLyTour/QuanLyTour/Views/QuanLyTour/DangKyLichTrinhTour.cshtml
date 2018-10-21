@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "DangKyLichTrinhTour";
+}
+
+<h2>DangKyLichTrinhTour</h2>
+
+
+@if (ViewBag.Tour != null)
+{
+    QuanLyTour.Models.Tour tour = ViewBag.Tour;
+
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Đăng ký lịch trình tour</h4>
+            <hr />
+            <div class="form-group">
+                @if (ViewBag.LichTrinhs != null)
+                {
+                    List<QuanLyTour.Models.LichTrinh_Tour> lichTrinhs = ViewBag.LichTrinhs;
+                    if (lichTrinhs.Count != 0)
+                    {
+                        <div class="control-label col-md-12" style="text-align: left;">
+                            Chọn lịch trình
+                        </div>
+                        <hr />
+                        <div style="width: 100%; display: block; border-color: #c3c3c3; border-radius: 10px; border-style:solid; border-width: 1px;">
+                            <div style="width:10%; float: left; height:1px;"></div>
+                            <div style="width: 45%; float: left; text-align: center">Ngày bắt đầu</div>
+                            <div style="width: 45%; float: left; text-align: center">Ngày kết thúc</div>
+                        </div>
+                        <div style="height:250px; overflow:auto; width: 100%;">
+                            <table width="100%">
+                                <tr style="border-color: #c3c3c3; border-radius: 10px; border-bottom-style:solid; border-bottom-width: 1px;">
+                                    <td width="10%"></td>
+                                    <td width="45%"></td>
+                                    <td width="45%"></td>
+                                </tr>
+
+                                @foreach (var lichtrinh in lichTrinhs)
+                                {
+                                    <tr style="border-color: #c3c3c3; border-radius: 10px; border-bottom-style:solid; border-bottom-width: 1px;">
+                                        <td style="border-color: #c3c3c3; border-radius: 10px; border-right-style:solid; border-right-width: 1px; text-align: center">
+                                            <input type="radio" class="radio" name="LichTrinh" value="@lichtrinh.MaLichtring" />
+                                        </td>
+                                        <td style="border-color: #c3c3c3; border-radius: 10px; border-right-style:solid; border-right-width: 1px; text-align: center">
+                                            <label>@lichtrinh.NgayDi.ToShortDateString()</label>
+                                        </td>
+                                        <td style="border-color: #c3c3c3; border-radius: 10px; border-right-style:solid; border-right-width: 1px; text-align: center">
+                                            <label>@lichtrinh.NgayKetthuc.ToShortDateString()</label>
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    }
+
+                }
+            </div>
+            <div class="form-group">
+                <div class="control-label col-md-2">
+                    Số người tham gia
+                </div>
+                <div class="col-md-5" style="display: inline-block">
+                    <div class="col-md-12">
+                        <div style="width: 10%;">
+                            <input type="radio" checked="checked" class="radio" name="LoaiThamGia" value="false" />
+                        </div>
+                        <div style="width:80%;">
+                            Một mình
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="col-md-12">
+                        <input type="radio" class="radio" name="LoaiThamGia" value="true" /> Nhiều người
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="control-label col-md-12" style="border-bottom-color: #c3c3c3; border-bottom-style: solid; border-bottom-width: 1px; text-align: left;">
+                    Người tham gia
+                </div>
+                <div style="overflow: auto; width: 100%; height: 250px;">
+                    <div id="nguoithamgia">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                Tên
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" name="Ten" class="form-control" />
+                            </div>
+                            <div class="col-md-4">
+                                Số điện thoại
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" name="SDT" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="width:100%; text-align: center;">
+                    <div id="btnThemNguoi" class="btn btn-default">Thêm người</div>
+                </div>
+            </div>
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+    <div style="display: none">
+        <script type="text/javascript" src="~/Scripts/FormDangKyLichTrinhTour.js"></script>
+    </div>
+
+}

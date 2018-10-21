@@ -1,0 +1,86 @@
+﻿@using QuanLyTour.Controllers
+@using QuanLyTour.Models
+@{
+    ViewBag.Title = "Quản lý";
+    NhanVien nhanVien = (NhanVien)Session[QuanLy.NHANVIEN];
+    NhanVien admin = (NhanVien)Session[QuanLy.ADMIN];
+}
+
+@if (nhanVien != null)
+{
+    <div style="width: 100%">
+        <table width="100%">
+            <tr>
+                <th colspan="5">
+                    Quản lý phiếu đăng ký lịch trình
+                </th>
+            </tr>
+            <tr>
+                <td width="20%">
+                    <a href="DanhSachPhieuDangKy">Xem phiếu đăng ký lịch trình</a>
+                </td>
+                <td width="20%">
+                    <a href="#">Xem danh sách phiếu đăng ký theo lịch trình</a>
+                </td>
+                <td width="20%">
+                    <a href="DanhSachPhieuChuaDuyet">Duyệt phiếu đăng ký lịch trình</a>
+                </td>
+            </tr>
+        </table>
+        <table width="100%" style="margin-top: 10px;">
+            <tr>
+                <th colspan="5">
+                    Quản lý tour
+                </th>
+            </tr>
+            <tr>
+                <td width="20%">
+                    <a href="TaoTour">Tạo mới tour</a>
+                </td>
+                <td width="20%">
+                    <a href="DanhSachXoaTour">Xóa tour</a>
+                </td>
+                <td width="20%">
+                    <a href="DanhSachSuaTour">Sửa tour</a>
+                </td>
+            </tr>
+        </table>
+        <table width="100%" style="margin-top: 10px;">
+            <tr>
+                <th colspan="5">
+                    Quản lý khách hàng
+                </th>
+            </tr>
+            <tr>
+                <td width="20%">
+                    <a href="@Url.RouteUrl(routeName: "QuanLyKhachHang")">Xem thông tin khách hàng</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+}
+@if(admin != null)
+{
+    <div style="width: 100%">
+        <table width="100%">
+            <tr>
+                <th colspan="5">
+                    Quản lý nhân viên
+                </th>
+            </tr>
+            <tr>
+                <td width="20%">
+                    <a href="ThemNhanVien">Thêm nhân viên</a>
+                </td>
+
+                <td width="20%">
+                    <a href="@Url.RouteUrl(routeName: "QuanLyNhanVien")">Xem nhân viên</a>
+                </td>
+
+                <td width="20%">
+                    <a href="XoaNhanVien">Xóa nhân viên</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+}
