@@ -1,0 +1,55 @@
+﻿@using QuanLyTour.Models
+@using QuanLyTour.Controllers
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutStaff.cshtml";
+    NhanVien nhanVien = (NhanVien)Session[ThongKe.NHANVIEN];
+}
+
+@if (nhanVien != null)
+{
+    <div style="width: 100%">
+        <table width="100%">
+            <tr>
+                <th colspan="5">
+                    Thống kê doanh thu
+                </th>
+            </tr>
+            <tr>
+                <td width="20%">
+                    <a href="@Url.Action(controllerName: "ThongKeDoanhThu", actionName: "ThongKeDoanhThuTheoThang")">Thống kê doanh thu theo tháng</a>
+                </td>
+
+                <td width="20%">
+                    <a href="@Url.Action(controllerName: "ThongKeDoanhThu", actionName: "ThongKeDoanhThuTheoQuy")">Thống kê doanh thu theo quý</a>
+                </td>
+
+                <td width="20%">
+                    <a href="@Url.Action(controllerName: "ThongKeDoanhThu", actionName: "ThongKeDoanhThuTheoNam")">Thống kê doanh thu năm</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="width: 100%">
+        <table width="100%">
+            <tr>
+                <th colspan="5">
+                    Thống kê Tour yêu thích
+                </th>
+            </tr>
+            <tr>
+                <td width="20%">
+                    <a href="@Url.Action(controllerName: "ThongKeTourYeuThich", actionName: "ThongKeTourYeuThichTheoThang")">Thống kê tour yêu thích theo tháng</a>
+                </td>
+
+                <td width="20%">
+                    <a href="@Url.Action(controllerName: "ThongKeTourYeuThich", actionName: "ThongKeTourYeuThichTheoQuy")">Thống kê tour yêu thích theo quý</a>
+                </td>
+
+                <td width="20%">
+                    <a href="@Url.Action(controllerName: "ThongKeTourYeuThich", actionName: "ThongKeTourYeuThichTheoNam")">Thống kê tour yêu thích theo năm</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+}

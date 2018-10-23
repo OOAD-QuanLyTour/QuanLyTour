@@ -19,11 +19,11 @@ namespace QuanLyTour.Controllers
 
         public ActionResult DangNhapKhachHang()
         {
-            if(Session[KHACHHANG] != null)
+            if(Session[KHACHHANG] == null)
             {
-                return Redirect("/");
+                return Redirect("/DangNhap");
             }
-            return View();
+            return Redirect("/");
         }
 
         [HttpPost]
@@ -65,7 +65,7 @@ namespace QuanLyTour.Controllers
         {
             if (Session[NHANVIEN] != null)
             {
-                return Redirect("/");
+                return Redirect("/QuanLy");
             }
 
             return View();
@@ -74,6 +74,11 @@ namespace QuanLyTour.Controllers
         [HttpPost]
         public ActionResult DangNhapNhanVien(FormCollection form)
         {
+            if(Session[NHANVIEN] != null)
+            {
+                return Redirect("/QuanLy");
+            }
+
             string taikhoan = form["taikhoan"];
             string matkhau = form["matkhau"];
             bool error = false;
@@ -102,14 +107,14 @@ namespace QuanLyTour.Controllers
             }
 
             Session[NHANVIEN] = khach;
-            return Redirect("/");
+            return Redirect("/QuanLy");
         }
 
         public ActionResult DangNhapQuanTriVien()
         {
             if (Session[ADMIN] != null)
             {
-                return Redirect("/");
+                return Redirect("/QuanLy");
             }
 
             return View();
@@ -146,7 +151,7 @@ namespace QuanLyTour.Controllers
             }
 
             Session[ADMIN] = khach;
-            return Redirect("/");
+            return Redirect("/QuanLy");
         }
 
         public ActionResult DangXuatKhachHang()
@@ -158,13 +163,13 @@ namespace QuanLyTour.Controllers
         public ActionResult DangXuatNhanVien()
         {
             Session[NHANVIEN] = null;
-            return Redirect("/");
+            return Redirect("/SigninForStaff");
         }
 
         public ActionResult DangXuatQuanTriVien()
         {
             Session[ADMIN] = null;
-            return Redirect("/");
+            return Redirect("/SigninForAdmin");
         }
     }
 }

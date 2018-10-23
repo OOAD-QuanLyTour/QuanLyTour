@@ -1,19 +1,25 @@
 ﻿@model IEnumerable<QuanLyTour.Models.Tour>
 
 @{
-    /**/
-
-    ViewBag.Title = "DanhSachXoaTour";
-
+    ViewBag.Title = "ThongKeDoanhThuTheoNam";
     Layout = "~/Views/Shared/_LayoutStaff.cshtml";
+    int i = 0;
+    List<int> doanhthu = (List<int>)ViewBag.DoanhThu;
 }
-
-<h2>DanhSachXoaTour</h2>
 
 @if (Model != null)
 {
+    <div>
+        <form method="get">
+            <input type="number" name="nam" />
+            <input type="submit" class="btn btn-default" value="Thống kê" />
+        </form>
+    </div>
     <table class="table">
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MaTour)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.TenTour)
             </th>
@@ -23,30 +29,36 @@
             <th>
                 @Html.DisplayNameFor(model => model.MoTa)
             </th>
-            <th></th>
+            <th>
+                Doanh thu
+            </th>
         </tr>
 
         @foreach (var item in Model)
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.MaTour)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.TenTour)
                 </td>
                 <td>
-                    @string.Format("{0:0,000} VND", item.GiaTour)
+                    @Html.DisplayFor(modelItem => item.GiaTour)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.MoTa)
                 </td>
                 <td>
-                    @Html.ActionLink("Xem thông tin", "Details", new { tour = item.MaTour }) |
-                    @Html.ActionLink("Xóa tour", "XoaTour", new { tour = item.MaTour })
+                    @string.Format("{0:0,000} VND", doanhthu.ElementAt(i++));
                 </td>
             </tr>
         }
 
     </table>
-} else
+
+}
+else
 {
     <div>
         <p>
@@ -54,6 +66,8 @@
         </p>
     </div>
 }
-<div>
-    <a href="/QuanLy">Quay về</a>
-</div>
+    <div>
+        <p>
+            <a href="/ThongKe">Quay về</a>
+        </p>
+    </div>

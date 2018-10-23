@@ -14,6 +14,12 @@ namespace QuanLyTour
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "ThongKe",
+                url: "ThongKe",
+                defaults: new { controller = "ThongKe", action = "Index" }
+            );
+
+            routes.MapRoute(
                 name: "QuanLy",
                 url: "QuanLy",
                 defaults: new { controller = "QuanLy", action = "Index" }
@@ -50,15 +56,35 @@ namespace QuanLyTour
             );
 
             routes.MapRoute(
-                name: "DanhSachPhieuDangKy",
-                url: "DanhSachPhieu",
-                defaults: new { controller = "QuanLyPhieuDangKy", action = "DanhSachPhieuDangKy" }
+                name: "DanhSachPhieuDaDangKy",
+                url: "DanhSachPhieuDaDangKy",
+                defaults: new { controller = "QuanLyPhieuDangKy", action = "DanhSachPhieuDaDangKy" }
+            );
+
+
+            routes.MapRoute(
+                name: "DanhSachLichTrinh",
+                url: "DanhSachLichTrinh",
+                defaults: new { controller = "QuanLyPhieuDangKy", action = "DanhSachLichTrinh" }
             );
 
             routes.MapRoute(
+                name: "DanhSachPhieuDangKy",
+                url: "DanhSachPhieuDangKy",
+                defaults: new { controller = "QuanLyPhieuDangKy", action = "DanhSachPhieuDangKy" }
+            );
+
+
+            routes.MapRoute(
                 name: "DanhSachPhieuChuaDuyet",
-                url: "DuyetPhieu",
+                url: "DanhSachDuyetPhieu",
                 defaults: new { controller = "QuanLyPhieuDangKy", action = "DanhSachPhieuChuaDuyet" }
+            );
+
+            routes.MapRoute(
+                name: "SuaThongTinCaNhan",
+                url: "SuaThongTinCaNhan",
+                defaults: new { controller = "QuanLyKhachHang", action = "SuaThongTinCaNhan" }
             );
 
             routes.MapRoute(
@@ -114,7 +140,7 @@ namespace QuanLyTour
             routes.MapRoute(
                 name: "DangKy",
                 url: "DangKy",
-                defaults: new { controller = "QuanLyDangKhachHang", action = "TaoKhachHang" }
+                defaults: new { controller = "QuanLyKhachHang", action = "TaoKhachHang" }
             );
 
             routes.MapRoute(

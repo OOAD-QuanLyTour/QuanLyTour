@@ -4,6 +4,7 @@
     ViewBag.Title = "Quản lý";
     NhanVien nhanVien = (NhanVien)Session[QuanLy.NHANVIEN];
     NhanVien admin = (NhanVien)Session[QuanLy.ADMIN];
+    Layout = ViewBag.Layout;
 }
 
 @if (nhanVien != null)
@@ -17,13 +18,13 @@
             </tr>
             <tr>
                 <td width="20%">
-                    <a href="DanhSachPhieuDangKy">Xem phiếu đăng ký lịch trình</a>
+                    <a href="/DanhSachPhieuDangKy">Xem phiếu đăng ký lịch trình</a>
                 </td>
                 <td width="20%">
-                    <a href="#">Xem danh sách phiếu đăng ký theo lịch trình</a>
+                    <a href="/DanhSachLichTrinh">Xem danh sách phiếu đăng ký theo lịch trình</a>
                 </td>
                 <td width="20%">
-                    <a href="DanhSachPhieuChuaDuyet">Duyệt phiếu đăng ký lịch trình</a>
+                    <a href="/DanhSachDuyetPhieu">Duyệt phiếu đăng ký lịch trình</a>
                 </td>
             </tr>
         </table>
@@ -35,13 +36,13 @@
             </tr>
             <tr>
                 <td width="20%">
-                    <a href="TaoTour">Tạo mới tour</a>
+                    <a href="/TaoTour">Tạo mới tour</a>
                 </td>
                 <td width="20%">
-                    <a href="DanhSachXoaTour">Xóa tour</a>
+                    <a href="/DanhSachTourCoTheXoa">Xóa tour</a>
                 </td>
                 <td width="20%">
-                    <a href="DanhSachSuaTour">Sửa tour</a>
+                    <a href="/DanhSachTourCoTheSua">Sửa tour</a>
                 </td>
             </tr>
         </table>
@@ -53,7 +54,7 @@
             </tr>
             <tr>
                 <td width="20%">
-                    <a href="@Url.RouteUrl(routeName: "QuanLyKhachHang")">Xem thông tin khách hàng</a>
+                    <a href="/DanhSachKhachHang">Xem thông tin khách hàng</a>
                 </td>
             </tr>
         </table>
@@ -70,15 +71,11 @@
             </tr>
             <tr>
                 <td width="20%">
-                    <a href="ThemNhanVien">Thêm nhân viên</a>
+                    <a href="/ThemNhanVien">Thêm nhân viên</a>
                 </td>
 
                 <td width="20%">
-                    <a href="@Url.RouteUrl(routeName: "QuanLyNhanVien")">Xem nhân viên</a>
-                </td>
-
-                <td width="20%">
-                    <a href="XoaNhanVien">Xóa nhân viên</a>
+                    <a href="/DanhSachNhanVien">Danh sách nhân viên</a>
                 </td>
             </tr>
         </table>

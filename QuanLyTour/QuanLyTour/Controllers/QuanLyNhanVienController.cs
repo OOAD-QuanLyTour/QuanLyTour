@@ -25,10 +25,10 @@ namespace QuanLyTour.Controllers
         {
             if(Session[ADMIN] == null)
             {
-                return Redirect("/");
+                return Redirect("/SigninForAdmin");
             }
 
-            var nhanviens = db.NhanViens.Where(n => n.Chucvu == true);
+            var nhanviens = db.NhanViens.Where(n => n.Chucvu == false);
 
             if (nhanviens == null)
             {
@@ -42,43 +42,42 @@ namespace QuanLyTour.Controllers
         {
             if(Session[ADMIN] == null)
             {
-                return Redirect("/");
+                return Redirect("/SigninForAdmin");
             }
 
             var nhanVien = db.NhanViens.SingleOrDefault(n => n.MaNV == nhanvien);
 
-            return View(nhanvien);
+            return View(nhanVien);
         }
 
         public ActionResult ThemNhanVien ()
         {
             if(Session[ADMIN] == null)
             {
-                return Redirect("/");
+                return Redirect("/SigninForAdmin");
             }
             return View();
         }
 
         [HttpPost]
-        [ValidateInput(true)]
         public ActionResult ThemNhanVien(NhanVien nhanvien)
         {
             if(Session[ADMIN] == null)
             {
-                return Redirect("/");
+                return Redirect("/SigninForAdmin");
             }
-
+            nhanvien.Chucvu = false;
             db.NhanViens.InsertOnSubmit(nhanvien);
             db.SubmitChanges();
 
-            return Redirect("/");
+            return RedirectToRoutePermanent(routeName: "QuanLyNhanVien");
         }
 
         public ActionResult XoaNhanVien(int nhanvien)
         {
             if (Session[ADMIN] == null)
             {
-                return Redirect("/");
+                return Redirect("/SigninForAdmin");
             }
 
             var nhanVien = db.NhanViens.SingleOrDefault(n => n.MaNV == nhanvien && n.Chucvu == false);
@@ -91,15 +90,22 @@ namespace QuanLyTour.Controllers
             return View(nhanVien);
         }
 
-        [HttpDelete]
-        public ActionResult XoaNhanVien(NhanVien nhanvien)
+        [HttpPost]
+        public ActionResult XoaNhanVien(FormCollection nhanvien)
         {
             if(Session[ADMIN]==null)
             {
-                return Redirect("/");
+                return Redirect("/SigninForAdmin");
             }
 
-            db.NhanViens.DeleteOnSubmit(nhanvien);
+            NhanVien nhanVien = db.NhanViens.SingleOrDefault(n => n.MaNV == int.Parse(nhanvien["MaNV"]) && n.Chucvu == false);
+
+            if(nhanVien == null)
+            {
+                return RedirectToRoutePermanent(routeName: "QuanLyNhanVien");
+            }
+
+            db.NhanViens.DeleteOnSubmit(nhanVien);
             db.SubmitChanges();
 
             return RedirectToRoutePermanent(routeName: "QuanLyNhanVien");

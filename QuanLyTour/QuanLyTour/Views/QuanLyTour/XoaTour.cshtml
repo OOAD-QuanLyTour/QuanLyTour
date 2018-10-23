@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "XoaTour";
+
+    Layout = "~/Views/Shared/_LayoutStaff.cshtml";
 }
 
 <h2>XoaTour</h2>
@@ -24,7 +26,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => string.Format("{0:0,000} VND", model.GiaTour))
+            @string.Format("{0:0,000} VND", Model.GiaTour)
         </dd>
 
         <dt>
@@ -37,13 +39,13 @@
 
     </dl>
 
-    @using (Html.BeginForm(method: FormMethod.Post))
+    @using (Html.BeginForm(FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-
+        @Html.HiddenFor(model => model.MaTour)
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <a href="/">Quay về</a>
         </div>
     }
 </div>

@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "DanhSachSuaTour";
+
+    Layout = "~/Views/Shared/_LayoutStaff.cshtml";
 }
 
 <h2>DanhSachSuaTour</h2>
@@ -29,7 +31,7 @@
                     @Html.DisplayFor(modelItem => item.TenTour)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => string.Format("{0:0,000} VND", item.GiaTour))
+                    @string.Format("{0:0,000} VND", item.GiaTour)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.MoTa)
@@ -49,3 +51,6 @@ else
         </p>
     </div>
 }
+<div>
+    <a href="/QuanLy">Quay về</a>
+</div>

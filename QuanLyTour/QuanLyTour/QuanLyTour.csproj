@@ -165,6 +165,10 @@
     <Compile Include="Controllers\QuanLyNhanVienController.cs" />
     <Compile Include="Controllers\QuanLyPhieuDangKyController.cs" />
     <Compile Include="Controllers\QuanLyTourController.cs" />
+    <Compile Include="Controllers\ThongKe.cs" />
+    <Compile Include="Controllers\ThongKeController.cs" />
+    <Compile Include="Controllers\ThongKeDoanhThuController.cs" />
+    <Compile Include="Controllers\ThongKeTourYeuThichController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -257,6 +261,20 @@
     <Content Include="Views\QuanLyKhachHang\XemThongTinCaNhan.cshtml" />
     <Content Include="Views\QuanLyKhachHang\XemThongTinKhachHang.cshtml" />
     <Content Include="Views\QuanLy\Index.cshtml" />
+    <Content Include="Views\QuanLyKhachHang\SuaThongTinCaNhan.cshtml" />
+    <Content Include="Views\QuanLyPhieuDangKy\DanhSachLichTrinh.cshtml" />
+    <Content Include="Views\QuanLyPhieuDangKy\DanhSachPhieuDangKyTheoLichTrinh.cshtml" />
+    <Content Include="Views\QuanLyPhieuDangKy\DanhSachPhieuDaDangKy.cshtml" />
+    <Content Include="Views\Shared\_LayoutStaff.cshtml" />
+    <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
+    <Content Include="Views\ThongKe\Index.cshtml" />
+    <Content Include="Views\ThongKeDoanhThu\ThongKeDoanhThuTheoThang.cshtml" />
+    <Content Include="Views\ThongKeDoanhThu\ThongKeDoanhThuTheoQuy.cshtml" />
+    <Content Include="Views\ThongKeDoanhThu\ThongKeDoanhThuTheoNam.cshtml" />
+    <Content Include="Views\ThongKeTourYeuThich\ThongKeTourYeuThichTheoThang.cshtml" />
+    <Content Include="Views\ThongKeTourYeuThich\ThongKeTourYeuThichTheoQuy.cshtml" />
+    <Content Include="Views\ThongKeTourYeuThich\ThongKeTourYeuThichTheoNam.cshtml" />
+    <Content Include="Views\QuanLyPhieuDangKy\DuyetPhieuDangKy1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -21,11 +21,28 @@ namespace QuanLyTour.Controllers
             return View();
         }
 
+        public ActionResult DanhSachPhieuDaDangKy()
+        {
+            if(Session[KHACHHANG] == null)
+            {
+                return Redirect("/DangNhap");
+            }
+
+            Khach khach = (Khach) Session[KHACHHANG];
+
+            if(khach.PhieuDangKies.Count == 0)
+            {
+                return View();
+            }
+
+            return View(khach.PhieuDangKies.ToList());
+        }
+
         public ActionResult DanhSachPhieuChuaDuyet()
         {
             if (Session[NHANVIEN] == null)
             {
-                return Redirect("");
+                return Redirect("/SigninForStaff");
             }
 
             var phieudangkies = db.PhieuDangKies;
@@ -45,7 +62,7 @@ namespace QuanLyTour.Controllers
         {
             if(Session[NHANVIEN] == null)
             {
-                return Redirect("");
+                return Redirect("/SigninForStaff");
             }
 
             var phieudangky = db.PhieuDangKies.SingleOrDefault(n => n.MaPhieuDK == phieu);
@@ -61,36 +78,72 @@ namespace QuanLyTour.Controllers
         }
 
         [HttpPost]
-        public ActionResult DuyetPhieuDangKy(PhieuDangKy phieu)
+        public ActionResult DuyetPhieuDangKy(FormCollection phieu)
         {
             if (Session[NHANVIEN] == null)
             {
-                return Redirect("");
+                return Redirect("/SigninForStaff");
             }
 
-            if(phieu.TinhTrang == null)
+            bool tinhtrang;
+
+            if(!bool.TryParse(phieu["TinhTrang"],out tinhtrang))
             {
-                return RedirectToAction("DuyetPhieuDangKy",routeValues: new { phieu = phieu.MaPhieuDK});
+                return RedirectToAction("DuyetPhieuDangKy",routeValues: new { phieu = int.Parse(phieu["MaPhieuDK"]) });
             }
 
-            var phieudangky = db.PhieuDangKies.SingleOrDefault(n => n.MaPhieuDK == phieu.MaPhieuDK);
+            var phieudangky = db.PhieuDangKies.SingleOrDefault(n => n.MaPhieuDK == int.Parse(phieu["MaPhieuDK"]));
 
-            phieudangky.TinhTrang = phieu.TinhTrang;
+            phieudangky.TinhTrang = tinhtrang;
             db.SubmitChanges();
 
             return RedirectToRoute(routeName: "DanhSachPhieuChuaDuyet");
+        }
+
+        public ActionResult DanhSachLichTrinh()
+        {
+            if (Session[NHANVIEN] == null)
+            {
+                return Redirect("/SigninForStaff");
+            }
+
+            var lichtrinhs = db.LichTrinh_Tours;
+
+            if(lichtrinhs.Count() == 0)
+            {
+                return View();
+            }
+
+            return View(lichtrinhs.ToList());
+        }
+
+        public ActionResult DanhSachPhieuDangKyTheoLichTrinh(int lichtrinh)
+        {
+            if (Session[NHANVIEN] == null)
+            {
+                return Redirect("/SigninForStaff");
+            }
+
+            var phieudangkies = db.PhieuDangKies.Where(n => n.MaLichtrinh == lichtrinh);
+
+            if (phieudangkies.Count() == 0)
+            {
+                return View();
+            }
+
+            return View(phieudangkies.ToList());
         }
 
         public ActionResult DanhSachPhieuDangKy()
         {
             if(Session[NHANVIEN] == null)
             {
-                return RedirectToAction("");
+                return Redirect("/SigninForStaff");
             }
 
             var phieudangkies = db.PhieuDangKies;
 
-            if(phieudangkies == null)
+            if(phieudangkies.Count() == 0)
             {
                 return View();
             }
@@ -102,7 +155,7 @@ namespace QuanLyTour.Controllers
         {
             if(Session[NHANVIEN] == null)
             {
-                return Redirect("");
+                return Redirect("/SigninForStaff");
             }
 
             var phieudangky = db.PhieuDangKies.SingleOrDefault(n => n.MaPhieuDK == phieu);

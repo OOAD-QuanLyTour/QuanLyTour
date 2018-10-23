@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "TaoTour";
+
+    Layout = "~/Views/Shared/_LayoutStaff.cshtml";
 }
 
 <h2>TaoTour</h2>
@@ -19,7 +21,7 @@
             @Html.LabelFor(model => model.TenTour, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.TenTour, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TenTour, "Chưa nhập tên tour", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.TenTour, (string)ViewData["tentour"], new { @class = "text-danger" })
             </div>
         </div>
 
@@ -27,7 +29,7 @@
             @Html.LabelFor(model => model.GiaTour, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.GiaTour, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.GiaTour, "Chưa nhập giá tour", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.GiaTour, (string)ViewData["giatour"], new { @class = "text-danger" })
             </div>
         </div>
 
@@ -41,14 +43,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Thêm tour" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    <a href="/QuanLy">Quay về</a>
 </div>
 
 @section Scripts {

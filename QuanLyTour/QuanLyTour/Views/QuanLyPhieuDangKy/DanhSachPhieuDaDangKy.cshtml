@@ -1,19 +1,19 @@
 ﻿@model IEnumerable<QuanLyTour.Models.PhieuDangKy>
 
 @{
-    ViewBag.Title = "DanhSachPhieuDangKy";
-
-    Layout = "~/Views/Shared/_LayoutStaff.cshtml";
+    ViewBag.Title = "DanhSachPhieuDaDangKy";
 }
 
-<h2>DanhSachPhieuDangKy</h2>
 @if (Model != null)
 {
-
+    <h2>DanhSachPhieuDaDangKy</h2>
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.MaKhach)
+                @Html.DisplayNameFor(model => model.MaPhieuDK)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LichTrinh_Tour.Tour.TenTour)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Ngaylap)
@@ -22,49 +22,61 @@
                 @Html.DisplayNameFor(model => model.TinhTrang)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MaLichtrinh)
+                @Html.DisplayNameFor(model => model.LichTrinh_Tour.NgayDi)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.LichTrinh_Tour.NgayKetthuc)
+            </th>
         </tr>
 
         @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.MaKhach)
+                    @Html.DisplayFor(modelItem => item.MaPhieuDK)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LichTrinh_Tour.Tour.TenTour)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Ngaylap)
                 </td>
                 <td>
-                    @if(item.TinhTrang == null)
+                    @if (item.TinhTrang == null)
                     {
-                        <p>Chờ</p>
-                    } else if(item.TinhTrang == true)
+                        <p>
+                            Chờ
+                        </p>
+                    }
+                    else if (item.TinhTrang == true)
                     {
                         <p>Hợp lệ</p>
-                    } else
+                    }
+                    else
                     {
                         <p>Không hợp lệ</p>
                     }
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.MaLichtrinh)
+                    @Html.DisplayFor(modelItem => item.LichTrinh_Tour.NgayDi)
                 </td>
                 <td>
-                    @Html.ActionLink("Xem thông tin", "XemPhieuDangKy", new { phieu = item.MaPhieuDK })
+                    @Html.DisplayFor(modelItem => item.LichTrinh_Tour.NgayKetthuc)
                 </td>
+
             </tr>
         }
+
     </table>
+
 }
 else
 {
     <div>
-        <p style="font-size: xx-large">
+        <p>
             Không có dữ liệu
         </p>
-    </div>   
+    </div>
 }
     <div>
         <a href="/QuanLy">Quay về</a>

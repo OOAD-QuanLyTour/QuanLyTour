@@ -2,108 +2,120 @@
 
 @{
     ViewBag.Title = "XemPhieuDangKy";
+
+    Layout = "~/Views/Shared/_LayoutStaff.cshtml";
 }
 
 <h2>XemPhieuDangKy</h2>
 
-<div>
-    <h4>PhieuDangKy</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Khach.HoTen)
-        </dt>
+@if (Model != null)
+{
+    <div>
+        <h4>PhieuDangKy</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Khach.HoTen)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Khach.HoTen)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Khach.HoTen)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Ngaylap)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Ngaylap)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Ngaylap)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Ngaylap)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TinhTrang)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.TinhTrang)
+            </dt>
 
-        <dd>
-            @if (Model.TinhTrang == null)
-            {
-                <p>
-                    Chưa duyệt
-                </p>
-            }
-            else if (Model.TinhTrang == true)
-            {
-                <p>
-                    Hợp lệ
-                </p>
-            }
-            else
-            {
-                <p>
-                    Không hợp lệ
-                </p>
-            }
-        </dd>
+            <dd>
+                @if (Model.TinhTrang == null)
+                {
+                    <p>
+                        Chưa duyệt
+                    </p>
+                }
+                else if (Model.TinhTrang == true)
+                {
+                    <p>
+                        Hợp lệ
+                    </p>
+                }
+                else
+                {
+                    <p>
+                        Không hợp lệ
+                    </p>
+                }
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LichTrinh_Tour.NgayDi)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.LichTrinh_Tour.NgayDi)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.LichTrinh_Tour.NgayDi)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.LichTrinh_Tour.NgayDi)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LichTrinh_Tour.NgayKetthuc)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.LichTrinh_Tour.NgayKetthuc)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.LichTrinh_Tour.NgayKetthuc)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.LichTrinh_Tour.NgayKetthuc)
+            </dd>
 
-        <dt>
-            Người tham gia
-        </dt>
+            <dt>
+                Người tham gia
+            </dt>
 
-        <dd>
-            @if (ViewBag.KhachThamGias != null)
-            {
-                List<QuanLyTour.Models.KhachThamGia> khachThamGias = ViewBag.KhachThamGias;
-                <div style="width: 90%; float: left;">
-                    <div style="width:50%">
-                        Tên
-                    </div>
-                    <div style="width: 50%">
-                        Số điện thoại
-                    </div>
-                </div>
-                <div style="width: 90%; overflow: auto; float: left; height: 250px;">
-                    <table width="100%">
-                        <tr>
-                            <td width="50%"></td>
-                            <td width="50%"></td>
-                        </tr>
-                        @foreach (var khach in khachThamGias)
-                        {
+            <dd>
+                @if (ViewBag.KhachThamGias != null)
+                {
+                    List<QuanLyTour.Models.KhachThamGia> khachThamGias = ViewBag.KhachThamGias;
+                    <div style="width: 90%; float: left;">
+                        <table width="100%">
                             <tr>
-                                <td>@khach.Ten</td>
-                                <td>@khach.SDT</td>
+                                <td width="50%">Tên</td>
+                                <td width="50%">Số điện thoại</td>
                             </tr>
-                        }
-                    </table>
-                </div>
+                        </table>
+                    </div>
+                    <div style="width: 90%; overflow: auto; float: left; height: 250px;">
+                        <table width="100%">
+                            <tr>
+                                <td width="50%"></td>
+                                <td width="50%"></td>
+                            </tr>
+                            @foreach (var khach in khachThamGias)
+                            {
+                                <tr>
+                                    <td>@khach.Ten</td>
+                                    <td>@khach.SDT</td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
 
-            }
-        </dd>
-    </dl>
+                }
+            </dd>
+        </dl>
+    </div>
+}
+else
+{
+    <div>
+        <p style="font-size: large">
+            Không có dữ liệu
+        </p>
+    </div>
+}
+<div>
+    <a href="/DanhSachPhieuDangKy">Quay về</a>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MaPhieuDK }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

@@ -125,6 +125,7 @@ namespace QuanLyTour.Controllers
             {
                 Khach khach = (Khach)Session["KhachHang"];
                 PhieuDangKy phieu = new PhieuDangKy();
+                phieu.MaKhach = khach.MaKhach;
 
                 if (tour["LichTrinh"] == null)
                 {
@@ -138,23 +139,28 @@ namespace QuanLyTour.Controllers
                 phieu.Ngaylap = DateTime.Now;
                 phieu.TinhTrang = null;
 
-                string[] tens = tour.GetValues("Ten");
-                string[] sdts = tour.GetValues("SDT");
-
-                for (int i = 0; i < tens.Length; i++)
+                if (bool.Parse(tour["LoaiThamGia"]))
                 {
-                    if (!string.IsNullOrEmpty(tens[i]) || !string.IsNullOrEmpty(sdts[i]))
+
+                    string[] tens = tour.GetValues("Ten");
+                    string[] sdts = tour.GetValues("SDT");
+
+                    for (int i = 0; i < tens.Length; i++)
                     {
-                        KhachThamGia khachThamGia = new KhachThamGia();
-                        khachThamGia.Ten = tens[i];
-                        khachThamGia.SDT = sdts[i];
-                        phieu.KhachThamGias.Add(khachThamGia);
+                        if (!string.IsNullOrEmpty(tens[i]) || !string.IsNullOrEmpty(sdts[i]))
+                        {
+                            KhachThamGia khachThamGia = new KhachThamGia();
+                            khachThamGia.Ten = tens[i];
+                            khachThamGia.SDT = sdts[i];
+                            phieu.KhachThamGias.Add(khachThamGia);
+                        }
                     }
                 }
+
                 db.PhieuDangKies.InsertOnSubmit(phieu);
                 db.SubmitChanges();
 
-                return Redirect("");
+                return Redirect("/");
             }
             return RedirectToRoute(routeName: "DangNhap");
         }
@@ -182,34 +188,51 @@ namespace QuanLyTour.Controllers
         {
             if(Session[NHANVIEN]==null)
             {
-                return Redirect("");
+                return Redirect("/SigninForStaff");
             }
             return View();
         }
 
         [HttpPost]
-        [ValidateInput(true)]
         public ActionResult TaoTour(Tour tour)
         {
             if(Session[NHANVIEN] == null)
             {
-                return Redirect("");
+                return Redirect("/SignInForStaff");
+            }
+
+            bool erroR = false;
+
+            if(string.IsNullOrEmpty(tour.TenTour) || string.IsNullOrWhiteSpace(tour.TenTour))
+            {
+                ViewData["tentour"] = "Chưa nhập tên tour";
+                erroR = true;
+            }
+
+            if(tour.GiaTour == 0)
+            {
+                ViewData["giatour"] = "Chưa nhập giá tour";
+                erroR = true;
+            }
+            if (erroR)
+            {
+                return View(tour);
             }
 
             db.Tours.InsertOnSubmit(tour);
             db.SubmitChanges();
 
-            return View();
+            return Redirect("/QuanLy");
         }
 
         public ActionResult DanhSachXoaTour()
         {
             if(Session[NHANVIEN] == null)
             {
-                return Redirect("");
+                return Redirect("/SignInForStaff");
             }
 
-            var tours = db.Tours.Where(n => n.LichTrinh_Tours.Where(m => (m.NgayDi <= DateTime.Now && DateTime.Now <= m.NgayKetthuc)||
+            var tours = db.Tours.Where(n => n.LichTrinh_Tours.Count == 0 || n.LichTrinh_Tours.Where(m => (m.NgayDi <= DateTime.Now && DateTime.Now <= m.NgayKetthuc)||
                                         m.PhieuDangKies.Where(k => k.TinhTrang == true || k.TinhTrang == null) == null) == null);
 
             if(tours != null)
@@ -224,7 +247,7 @@ namespace QuanLyTour.Controllers
         {
             if(Session[NHANVIEN] == null)
             {
-                return Redirect("");
+                return Redirect("/SigninForStaff");
             }
 
             var Tour = db.Tours.SingleOrDefault(n => n.MaTour == tour);
@@ -238,16 +261,18 @@ namespace QuanLyTour.Controllers
         }
 
         [HttpPost]
-        public ActionResult XoaTour(Tour tour)
+        public ActionResult XoaTour(FormCollection tour)
         {
             if(Session[NHANVIEN] == null)
             {
-                return Redirect("");
+                return Redirect("/SigninForStaff");
             }
 
-            if(tour.LichTrinh_Tours.Where(n => n.NgayDi >= DateTime.Now && n.NgayKetthuc <= DateTime.Now) == null)
+            Tour Tour = db.Tours.SingleOrDefault(n => n.MaTour == int.Parse(tour["MaTour"]));
+
+            if(Tour.LichTrinh_Tours.Where(n => n.NgayDi >= DateTime.Now && n.NgayKetthuc <= DateTime.Now).Count() == 0)
             {
-                db.Tours.DeleteOnSubmit(tour);
+                db.Tours.DeleteOnSubmit(Tour);
                 db.SubmitChanges();
             }
 
@@ -259,7 +284,7 @@ namespace QuanLyTour.Controllers
         {
             if(Session[NHANVIEN] == null)
             {
-                return Redirect("");
+                return Redirect("/SigninForStaff");
             }
 
             var tours = db.Tours;
@@ -276,7 +301,7 @@ namespace QuanLyTour.Controllers
         {
             if (Session[NHANVIEN] == null)
             {
-                return Redirect("");
+                return Redirect("/SigninForStaff");
             }
 
             var Tour = db.Tours.SingleOrDefault(n => n.MaTour == tour);
@@ -290,17 +315,36 @@ namespace QuanLyTour.Controllers
         }
 
         [HttpPost]
-        [ValidateInput(true)]
-        public ActionResult SuaTour(Tour tour)
+        public ActionResult SuaTour(Tour toursua)
         {
             if(Session[NHANVIEN] == null)
             {
-                return Redirect("");
+                return Redirect("/SigninForStaff");
             }
-            var Tour = db.Tours.SingleOrDefault(n => n.MaTour == tour.MaTour);
-            Tour.GiaTour = tour.GiaTour;
-            Tour.TenTour = tour.TenTour;
-            Tour.MoTa = tour.MoTa;
+
+            bool erroR = false;
+
+            if (toursua.GiaTour == 0)
+            {
+                ViewData["giatour"] = "Chưa nhập giá tour";
+                erroR = true;
+            }
+
+            if (string.IsNullOrEmpty(toursua.TenTour) || string.IsNullOrWhiteSpace(toursua.TenTour))
+            {
+                ViewData["tentour"] = "Chưa nhập tên tour";
+                erroR = true;
+            }
+
+            if(erroR)
+            {
+                return View(toursua);
+            }
+
+            var Tour = db.Tours.SingleOrDefault(n => n.MaTour == toursua.MaTour);
+            Tour.GiaTour = toursua.GiaTour;
+            Tour.TenTour = toursua.TenTour;
+            Tour.MoTa = toursua.MoTa;
             db.SubmitChanges();
 
             return RedirectToRoute(routeName: "DanhSachSuaTour");

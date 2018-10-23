@@ -10,7 +10,7 @@
 
     <div class="form-horizontal">
         <hr />
-
+        <p class="text-danger">@ViewData["loi"]</p>
         <div class="form-group">
             @Html.Label("Tài khoản", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -22,7 +22,7 @@
         <div class="form-group">
             @Html.Label("Mật khẩu", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input class="form-control" name="matkhau" />
+                <input class="form-control" name="matkhau" type="password" />
                 <p class="text-danger">@ViewData["matkhau"]</p>
             </div>
         </div>

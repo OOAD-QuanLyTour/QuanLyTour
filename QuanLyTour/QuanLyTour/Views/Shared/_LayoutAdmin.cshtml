@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using QuanLyTour.Models
+@using QuanLyTour.Controllers
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -20,24 +22,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Quan Ly Tour", "", "", new { area = "" }, new { @class = "navbar-brand" })
+                <a class="navbar-brand" href="/QuanLy">Quan Ly Tour</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "", "")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li><a href="/QuanLy">Quản lý</a></li>
                 </ul>
                 <ul class="nav navbar-nav" style="float: right">
-                    @if (Session[QuanLyTour.Controllers.QuanLy.KHACHHANG] == null)
+                    @if (Session[QuanLy.ADMIN] != null)
                     {
-                        <li><a href="/DangNhap">Đăng nhập</a></li>
-                        <li><a href="/DangKy">Đăng ký</a></li>
-                    }
-                    else
-                    {
-                        <li><a href="/ThongTinCaNhan">@(((QuanLyTour.Models.Khach)Session[QuanLyTour.Controllers.QuanLy.KHACHHANG]).HoTen)</a></li>
-                        <li><a href="/DangXuat">Đăng xuất</a></li>
+                        <li>@(((NhanVien)Session[QuanLy.ADMIN]).TenNV)</li>
+                        <li><a href="/LogoutForAdmin">Đăng xuất</a></li>
                     }
                 </ul>
             </div>

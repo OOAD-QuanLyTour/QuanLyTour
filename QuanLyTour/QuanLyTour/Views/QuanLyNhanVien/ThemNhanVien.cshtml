@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "ThemNhanVien";
-    Model.Chucvu = false;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h2>ThemNhanVien</h2>
@@ -65,7 +65,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    <a href="/QuanLy">Quay về</a>
 </div>
 
 @section Scripts {

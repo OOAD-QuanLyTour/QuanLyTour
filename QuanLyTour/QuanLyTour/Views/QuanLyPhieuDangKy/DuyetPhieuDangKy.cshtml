@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "DuyetPhieuDangKy";
+
+    Layout = "~/Views/Shared/_LayoutStaff.cshtml";
 }
 
 <h2>Duyệt phiếu đăng ký</h2>
@@ -12,6 +14,8 @@
         <h4>PhieuDangKy</h4>
         <hr />
         <form method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="MaPhieuDK" id="MaPhieuDK" value="@Model.MaPhieuDK" />
             <dl class="dl-horizontal">
                 <dt>
                     @Html.DisplayNameFor(model => model.MaKhach)
@@ -108,18 +112,15 @@
             </dl>
         </form>
     </div>
-    <p>
-        @Html.ActionLink("Duyệt phiếu", "DuyetPhieuDangKy", new { phieu = Model.MaPhieuDK }) |
-        @Html.ActionLink("Quay về danh sách", "DanhSachPhieuChuaDuyet")
-    </p>
+
 
 }
 else
 {
     <div>
         <p>Không có dữ liệu</p>
-        <p>
-            @Html.ActionLink("Quay về danh sách", "DanhSachPhieuChuaDuyet")
-        </p>
     </div>
 }
+<div>
+    @Html.ActionLink("Quay về danh sách", "DanhSachPhieuChuaDuyet")
+</div>

@@ -20,7 +20,7 @@ namespace QuanLyTour.Controllers
         {
             if(Session[NHANVIEN] == null)
             {
-                return Redirect("/");
+                return Redirect("/SigninForStaff");
             }
 
             var khachhangs = db.Khaches;
@@ -36,25 +36,63 @@ namespace QuanLyTour.Controllers
         {
             if(Session[KHACHHANG] != null)
             {
+
                 return Redirect("/");
             }
+            ViewData["hoten"] = "";
+            ViewData["matkhau"] = "";
+            ViewData["taikhoan"] = "";
+            ViewData["SDT"] = "";
             return View();
         }
 
         [HttpPost]
-        [ValidateInput(true)]
         public ActionResult TaoKhachHang(Khach khach)
         {
             if(Session[KHACHHANG] != null)
             {
                 return Redirect("/");
             }
+            ViewData["hoten"] = "";
+            ViewData["matkhau"] = "";
+            ViewData["taikhoan"] = "";
+            ViewData["SDT"] = "";
+            bool erroR = false;
+            if(string.IsNullOrEmpty(khach.HoTen) || string.IsNullOrWhiteSpace(khach.HoTen))
+            {
+                ViewData["hoten"] = "Chưa nhập họ và tên";
+                erroR = true;
+            }
 
-            var Khach = db.Khaches.Where(n => n.Username == khach.Username);
+            if (string.IsNullOrEmpty(khach.Pwd) || string.IsNullOrWhiteSpace(khach.Pwd))
+            {
+                ViewData["matkhau"] = "Chưa nhập mật khẩu";
+                erroR = true;
+            }
+
+            if (string.IsNullOrEmpty(khach.Username) || string.IsNullOrWhiteSpace(khach.Username))
+            {
+                ViewData["taikhoan"] = "Chưa nhập tài khoản";
+                erroR = true;
+            }
+
+            if (string.IsNullOrEmpty(khach.SDT) || string.IsNullOrWhiteSpace(khach.SDT))
+            {
+                ViewData["SDT"] = "Chưa nhập số điện thoại";
+                erroR = true;
+            }
+
+            if(erroR)
+            {
+                return View(khach);
+            }
+
+            Khach Khach = db.Khaches.SingleOrDefault(n => n.Username == khach.Username);
 
             if(Khach != null)
             {
                 ViewData["taikhoan"] = "Tài khoản đã được dùng";
+                return View(khach);
             }
 
             db.Khaches.InsertOnSubmit(khach);
@@ -74,12 +112,75 @@ namespace QuanLyTour.Controllers
             return RedirectToRoute(routeName: "DangNhap");
         }
 
-        
+        public ActionResult SuaThongTinCaNhan()
+        {
+            if(Session[KHACHHANG] == null)
+            {
+                return RedirectToRoute(routeName: "DangNhap");
+            }
+            Khach khach = (Khach)Session[KHACHHANG];
+            return View(khach);
+        }
+
+        [HttpPost]
+        public ActionResult SuaThongTinCaNhan(Khach khach)
+        {
+            if(Session[KHACHHANG] == null)
+            {
+                return RedirectToRoute(routeName: "DangNhap");
+            }
+
+            Khach Khach = (Khach)Session[KHACHHANG];
+
+            bool erroR = false;
+
+            if(string.IsNullOrEmpty(khach.Pwd))
+            {
+                ViewData["matkhau"] = "Mật khẩu không được để trống";
+                erroR = true;
+            }
+
+            if(string.IsNullOrEmpty(khach.HoTen) || string.IsNullOrWhiteSpace(khach.HoTen))
+            {
+                ViewData["hoten"] = "Họ tên không được để trống";
+                erroR = true;
+            }
+
+            if (string.IsNullOrEmpty(khach.SDT) || string.IsNullOrWhiteSpace(khach.SDT))
+            {
+                ViewData["SDT"] = "Số điện thoại không được để trống";
+                erroR = true;
+            }
+
+            if(erroR)
+            {
+                return View(khach);
+            }
+
+            Khach khacH = db.Khaches.SingleOrDefault(n => n.MaKhach == Khach.MaKhach);
+
+            if(khacH == null)
+            {
+                ViewData["loi"] = "Khách hàng không có trong CSDL";
+                return View(khach);
+            }
+
+            khacH.HoTen = khach.HoTen;
+            khacH.Pwd = khach.Pwd;
+            khacH.SDT = khach.SDT;
+            khacH.Diachi = khach.Diachi;
+            khacH.TenCoQuan = khach.TenCoQuan;
+
+            db.SubmitChanges();
+
+            return Redirect("/XemThongTinCaNhan");
+        }
+
         public ActionResult XemThongTinKhachHang(int khach)
         {
             if(Session[NHANVIEN] == null)
             {
-                return Redirect("/");
+                return Redirect("/SigninForStaff");
             }
 
             var Khach = db.Khaches.SingleOrDefault(n => n.MaKhach == khach);

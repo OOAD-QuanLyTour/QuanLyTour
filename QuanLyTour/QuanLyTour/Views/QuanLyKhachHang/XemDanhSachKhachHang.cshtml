@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "XemDanhSachKhachHang";
+    Layout = "~/Views/Shared/_LayoutStaff.cshtml";
 }
 
 <h2>XemDanhSachKhachHang</h2>
@@ -47,7 +48,7 @@
                     @Html.DisplayFor(modelItem => item.Username)
                 </td>
                 <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.MaKhach })
+                    @Html.ActionLink("Xem thông tin", "XemThongTinKhachHang", new { khach = item.MaKhach })
                 </td>
             </tr>
         }
@@ -63,3 +64,6 @@ else
         </p>
     </div>
 }
+<div>
+    <a href="/QuanLy">Quay về</a>
+</div>

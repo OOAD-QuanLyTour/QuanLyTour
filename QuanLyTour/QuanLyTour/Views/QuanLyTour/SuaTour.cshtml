@@ -2,17 +2,21 @@
 
 @{
     ViewBag.Title = "SuaTour";
+
+    Layout = "~/Views/Shared/_LayoutStaff.cshtml";
 }
 
 <h2>SuaTour</h2>
 
 
-<form method="post" enctype="multipart/form-data">
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
         <h4>Tour</h4>
         <hr />
+        @Html.HiddenFor(model => model.MaTour)
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.MaTour)
 
@@ -20,7 +24,7 @@
             @Html.LabelFor(model => model.TenTour, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.TenTour, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TenTour, "Chưa nhập tên tour", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.TenTour, (string)ViewData["tentour"], new { @class = "text-danger" })
             </div>
         </div>
 
@@ -28,7 +32,7 @@
             @Html.LabelFor(model => model.GiaTour, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.GiaTour, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.GiaTour, "Chưa nhập giá tour", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.GiaTour, (string)ViewData["giatour"], new { @class = "text-danger" })
             </div>
         </div>
 
@@ -46,10 +50,10 @@
             </div>
         </div>
     </div>
-</form>
+}
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    <a href="/DanhSachTourCoTheSua">Quay về</a>
 </div>
 
 @section Scripts {

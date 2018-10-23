@@ -1,17 +1,22 @@
 ﻿@model IEnumerable<QuanLyTour.Models.Tour>
 
 @{
-    /**/
-
-    ViewBag.Title = "DanhSachXoaTour";
-
+    ViewBag.Title = "ThongKeTourYeuThichTheoQuy";
     Layout = "~/Views/Shared/_LayoutStaff.cshtml";
+    int i = 0;
+    List<int> yeuthich = (List<int>)ViewBag.YeuThich;
 }
-
-<h2>DanhSachXoaTour</h2>
-
+<h2>ThongKeTourYeuThichTheoQuy</h2>
+<div>
+    <form method="get">
+        <span>Quý</span> <input type="number" max="4" min="1" name="quy" />
+        <span>Năm</span> <input type="number" max="9999" min="1900" name="nam" />
+        <input type="submit" value="Thống kê" />
+    </form>
+</div>
 @if (Model != null)
 {
+
     <table class="table">
         <tr>
             <th>
@@ -23,7 +28,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.MoTa)
             </th>
-            <th></th>
+            <th>
+                Yêu thích
+            </th>
         </tr>
 
         @foreach (var item in Model)
@@ -33,20 +40,21 @@
                     @Html.DisplayFor(modelItem => item.TenTour)
                 </td>
                 <td>
-                    @string.Format("{0:0,000} VND", item.GiaTour)
+                    @Html.DisplayFor(modelItem => item.GiaTour)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.MoTa)
                 </td>
                 <td>
-                    @Html.ActionLink("Xem thông tin", "Details", new { tour = item.MaTour }) |
-                    @Html.ActionLink("Xóa tour", "XoaTour", new { tour = item.MaTour })
+                    @yeuthich.ElementAt(i++)
                 </td>
             </tr>
         }
 
     </table>
-} else
+
+}
+else
 {
     <div>
         <p>
@@ -55,5 +63,7 @@
     </div>
 }
 <div>
-    <a href="/QuanLy">Quay về</a>
+    <p>
+        <a href="/ThongKe">Quay về</a>
+    </p>
 </div>

@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "XoaNhanVien";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h2>XoaNhanVien</h2>
@@ -51,19 +52,11 @@
             @Html.DisplayFor(model => model.Username)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Pwd)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Pwd)
-        </dd>
-
     </dl>
 
-    <form method="delete" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data">
         @Html.AntiForgeryToken()
-
+        @Html.HiddenFor(model => model.MaNV)
         <div class="form-actions no-color">
             <input type="submit" value="Xóa" class="btn btn-default" /> |
             @Html.ActionLink("Quay về danh sách", "QuanLyNhanVien")

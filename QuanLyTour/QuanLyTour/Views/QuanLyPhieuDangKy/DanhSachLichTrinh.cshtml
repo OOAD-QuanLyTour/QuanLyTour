@@ -1,25 +1,25 @@
-﻿@model IEnumerable<QuanLyTour.Models.PhieuDangKy>
+﻿@model IEnumerable<QuanLyTour.Models.LichTrinh_Tour>
 
 @{
-    ViewBag.Title = "DanhSachPhieuChuaDuyet";
+    ViewBag.Title = "DanhSachLichTrinh";
 
     Layout = "~/Views/Shared/_LayoutStaff.cshtml";
 }
 
-<h2>DanhSachPhieuChuaDuyet</h2>
+<h2>DanhSachLichTrinh</h2>
 @if (Model != null)
 {
 
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.MaKhach)
+                @Html.DisplayNameFor(model => model.Tour.TenTour)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Ngaylap)
+                @Html.DisplayNameFor(model => model.NgayDi)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MaLichtrinh)
+                @Html.DisplayNameFor(model => model.NgayKetthuc)
             </th>
             <th></th>
         </tr>
@@ -28,16 +28,16 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.MaKhach)
+                    @Html.DisplayFor(modelItem => item.Tour.TenTour)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Ngaylap)
+                    @Html.DisplayFor(modelItem => item.NgayDi)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.MaLichtrinh)
+                    @Html.DisplayFor(modelItem => item.NgayKetthuc)
                 </td>
                 <td>
-                    @Html.ActionLink("Tiến hành duyệt", "DuyetPhieuDangKy", new { phieu = item.MaPhieuDK })
+                    @Html.ActionLink("Danh sách phiếu", "DanhSachPhieuDangKyTheoLichTrinh", new { lichtrinh = item.MaLichtring })
                 </td>
             </tr>
         }
